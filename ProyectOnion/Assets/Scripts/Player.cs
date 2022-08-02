@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
         public float x, y;
     private Animator anim;
     public int attack= 7;
+    public GameObject []camera;
+    private int cam = 0;
     // Start is called before the first frame update
     void Start()
     {
+        cam++;
         Debug.Log(hp);
         Debug.Log("EJECUTANDO EL START");
         anim = GetComponent<Animator>();
@@ -26,16 +29,36 @@ public class Player : MonoBehaviour
         Debug.Log("EJECUTANDO EL UPDATE");
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
-        if (Input.GetKey(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space)) 
         {
             Damage(10);
         }
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             Heal(10);
             if (hp>= maxhp)
                 {
                 hp = maxhp;
+            }
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                if (cam < 3)
+                {
+                    cam = 1;
+                }
+                if (cam == 1)
+                {
+                    Camera1();
+                }
+                if (cam == 2)
+                {
+                    Camera2();
+                }
+                if (cam == 3)
+                {
+                    Camera3();
+                }
+                cam++;
             }
                
         }
@@ -52,5 +75,23 @@ public class Player : MonoBehaviour
     void Heal(int value)
     {
         hp = hp + value;
+    }
+    private void Camera1()
+    {
+        camera[0].SetActive(true);
+        camera[1].SetActive(false);
+        camera[2].SetActive(false);
+    }
+    private void Camera2()
+    {
+        camera[0].SetActive(false);
+        camera[1].SetActive(true);
+        camera[2].SetActive(false);
+    }
+    private void Camera3()
+    {
+        camera[0].SetActive(false);
+        camera[1].SetActive(false);
+        camera[2].SetActive(true);
     }
 }
