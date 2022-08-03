@@ -15,5 +15,7 @@ public class FollowCamera : MonoBehaviour
     void LateUpdate()
     {
         transform.position = target.transform.position;
+        transform.rotation = target.transform.rotation;
+
     }
 }
