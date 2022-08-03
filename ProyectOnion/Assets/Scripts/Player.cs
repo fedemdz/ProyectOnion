@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
         public float x, y;
     private Animator anim;
     public int attack= 7;
+    public float cameraAxisX = 0f;
       // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
         }
                           
         }
+        RotatePlayer();
         transform.Rotate (0, x * Time.deltaTime * velocidadRotacion, 0);
         transform.Translate(0, 0, y * Time.deltaTime * velocidad);
 
@@ -54,5 +56,11 @@ public class Player : MonoBehaviour
     {
         hp = hp + value;
     }
-   
+    public void RotatePlayer()
+    {
+        cameraAxisX += Input.GetAxis("Horizontal");
+        transform.rotation = Quaternion.Euler(0, cameraAxisX, 0);
+        Quaternion newRotation = Quaternion.Euler(0, cameraAxisX, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 5f * Time.deltaTime);
+    }
 }
