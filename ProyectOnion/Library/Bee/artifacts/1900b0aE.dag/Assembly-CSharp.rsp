@@ -361,6 +361,7 @@
 "Assets/Scripts/Enemies.cs"
 "Assets/Scripts/FollowCamera.cs"
 "Assets/Scripts/Player.cs"
+"Assets/Scripts/Portal.cs"
 -langversion:9.0
 
 /deterministic
