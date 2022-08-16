@@ -6,6 +6,7 @@ public class Portal : MonoBehaviour
 {
     [SerializeField][Range(1,2)]int reduction =1;
     [SerializeField][Range(0f, 4f)]float cooldown = 2f;
+    [SerializeField] GameObject player;
     [SerializeField] Transform portal;
     private float timeInPortal =0;
 
@@ -38,16 +39,23 @@ public class Portal : MonoBehaviour
    {
     Debug.Log("Collisioning with " + other.gameObject.name) ;
     timeInPortal += Time.deltaTime;
-    if(timeInPortal >=cooldown)
+  /*  if (other.gameObject.CompareTag("GoldWall"))
     {
-         Vector3 randomSpawnPosition = new Vector3(Random.Range(-10, 11), Random.Range(-10, 11),Random.Range(-10, 11));
+        if(timeInPortal >=cooldown)
+    {
+         Vector3 randomSpawnPosition = new Vector3(Random.Range(-10, 11), Random.Range(0, 11),Random.Range(-10, 11));*/
     }
-   }
+    
+
+  
+    
+   
 
 
 
    private void OnTriggerEnter(Collider other)
    {
+  
     timeInPortal = 0;   
     Debug.Log("Entering trigger with " + other.gameObject.name);
    if (other.gameObject.CompareTag("RedPortal"))
@@ -77,8 +85,22 @@ public class Portal : MonoBehaviour
    private void OnTriggerStay(Collider other) 
    {
     Debug.Log("Staying on trigger with " + other.gameObject.name) ;
-    
+    if (other.gameObject.CompareTag("GoldWall"))
+    {
+         StartCoroutine(Teleport());
+    }
+   
    }
 
+ IEnumerator Teleport()
+   {
+    
+       yield return new WaitForSeconds(2);
+       player.transform.position = new Vector3(-5, 5, -5);
+        player.transform.rotation = Quaternion.Euler(0, -5, 10);
+       
+          
+       
+   }
  
 }

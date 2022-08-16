@@ -4,63 +4,148 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int hp = 100;
-    public int maxhp = 100;
-    public float velocidad = 2f;
-    public float velocidadRotacion = 130f;
-        public float x, y;
-    private Animator anim;
-    public int attack= 7;
-    public float cameraAxisX = 0f;
-      // Start is called before the first frame update
+    [SerializeField]
+    [Range(1f, 10f)]
+    private float speed = 3f;
+
+    // Propiedad empleada para almacenar la rotacion de la camara en Y.
+    private float cameraAxisX = 0f;
+
+
+    [SerializeField] Animator player;
+
+    private Vector3 playerDirection;
+
     void Start()
     {
-            
-        Debug.Log(hp);
-        Debug.Log("EJECUTANDO EL START");
-        anim = GetComponent<Animator>();
 
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
-        Debug.Log("EJECUTANDO EL UPDATE");
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-       if (Input.GetKeyDown(KeyCode.Space)) 
-       {
-        Damage(10);
-      }
-      if (Input.GetKeyDown(KeyCode.LeftAlt))
-     {
-         Heal(10);
-     if (hp>= maxhp)
-            {
-             hp = maxhp;
+       RotatePlayer();
+        //PRIMERA FORMA DE ANIMAR CON MOVIMIENTO: ANIMAR ANTES SE MOVER
+        //Elegimos una animacion en función de la tecla que se empieza a presionar.
+        bool forward = Input.GetKeyDown(KeyCode.W);
+        bool back = Input.GetKeyDown(KeyCode.S);
+        bool left = Input.GetKeyDown(KeyCode.A);
+        bool right = Input.GetKeyDown(KeyCode.D);
+        //Es posible simplificar la notación del if si el bloque contiene una única línea.
+        if (forward) player.SetTrigger("Run");
+        if (back) player.SetTrigger("Moonwalk");
+        if (left) player.SetTrigger("Left");
+        if (right) player.SetTrigger("Right");
+        // Estamos en reposo si se deja de presionar alguna de las teclas de movimiento.
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        {
+            if (!IsAnimation("IDLE")) player.SetTrigger("IDLE");
         }
-                          
-        }
-        RotatePlayer();
-        transform.Rotate (0, x * Time.deltaTime * velocidadRotacion, 0);
-        transform.Translate(0, 0, y * Time.deltaTime * velocidad);
+        //Limpiamos la dirección de movimiento en cada frame.
+        playerDirection = Vector3.zero;
+        //Elegimos una dirección en función de la tecla que se mantiene presionada.
+        if (Input.GetKey(KeyCode.W)) playerDirection += Vector3.forward;
+        if (Input.GetKey(KeyCode.S)) playerDirection += Vector3.back;
+        if (Input.GetKey(KeyCode.D)) playerDirection += Vector3.right;
+        if (Input.GetKey(KeyCode.A)) playerDirection += Vector3.left;
+        //Nos movemos solo si hay una dirección diferente que vector zero.
+        if (playerDirection != Vector3.zero) MovePlayer(playerDirection);
+        /* SEGUNDA FORMA DE ANIMAR CON MOVIMIENTO: ANIMAR MIENTRAS SE MUEVE*/
+     /*   if (Input.GetKey(KeyCode.W))
+        {
 
-        anim.SetFloat("VelX", x);
-        anim.SetFloat("VelY", y);
+            playerDirection = Vector3.forward;
+            if (!IsAnimation("FORWARD")) player.SetTrigger("FORWARD");
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            playerDirection = Vector3.back;
+            if (!IsAnimation("BACK")) player.SetTrigger("BACK");
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            playerDirection = Vector3.left;
+            if (!IsAnimation("LEFT")) player.SetTrigger("LEFT");
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            playerDirection = Vector3.right;
+            if (!IsAnimation("RIGHT"))
+            {
+                player.SetTrigger("RIGHT");
+            }
+        }
+         //Si se modifica la dirección en el frame avanzamos. Si no ejecutamos animación IDLE
+        if (playerDirection != Vector3.zero)
+        {
+            MovePlayer(playerDirection);
+        }
+        else
+        {
+            if (!IsAnimation("IDLE")) player.SetTrigger("IDLE");
+        }
+        */
     }
-    void Damage(int value)
+
+    /*TERCER FORMA DE ANIMAR EL MOVIMIENTO: ANIMAR DESPUES DE MOVER O MOVER DESPUES DE ANIMAR
+    private void LateUpdate()
     {
-        hp = hp - value;
+        //Elegimos una animacion en función de la tecla que se empieza a presionar.
+        if (playerDirection == Vector3.forward)
+        {
+            if (!IsAnimation("FORWARD")) playerAnimator.SetTrigger("FORWARD");
+        }
+
+        if (playerDirection == Vector3.back)
+        {
+            if (!IsAnimation("BACK")) playerAnimator.SetTrigger("BACK");
+        }
+
+        if (playerDirection == Vector3.left)
+        {
+            if (!IsAnimation("LEFT")) playerAnimator.SetTrigger("LEFT");
+        }
+
+        if (playerDirection == Vector3.right)
+        {
+            if (!IsAnimation("RIGHT"))
+            {
+                playerAnimator.SetTrigger("RIGHT");
+            }
+        }
+
+        if (playerDirection == Vector3.zero)
+        {
+            if (!IsAnimation("IDLE")) playerAnimator.SetTrigger("IDLE");
+        }
     }
-    void Heal(int value)
+    */
+    private bool IsAnimation(string animName)
     {
-        hp = hp + value;
+        return player.GetCurrentAnimatorStateInfo(0).IsName(animName);
     }
+
+
+    private void MovePlayer(Vector3 direction)
+    {
+        transform.Translate(direction * speed * Time.deltaTime);
+    }
+
     public void RotatePlayer()
     {
-        cameraAxisX += Input.GetAxis("Horizontal");
-        transform.rotation = Quaternion.Euler(0, cameraAxisX, 0);
+        /*
+        Obtengo el valor del input del cursor (Que en Mouse X va de -1(izquierda) a 1(derecha))
+        en función de que tan a la izquierda o derecha se mueve el mouse.
+        */
+        cameraAxisX += Input.GetAxis("Mouse X");
+        // Forma para rotar "inmediatamente" hacia una nueva rotación creada con el método Euler (a partir de los ejes x,y,z)
+        //transform.rotation = Quaternion.Euler(0,cameraAxisX * 0.1f, 0);
+        // Forma para rotar "gradualmente" hacia una nueva rotación con Lerp.
         Quaternion newRotation = Quaternion.Euler(0, cameraAxisX, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 5f * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 2.5f * Time.deltaTime);
     }
 }
+
