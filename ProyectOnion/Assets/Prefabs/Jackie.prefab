@@ -1811,13 +1811,14 @@ GameObject:
   - component: {fileID: 4490039389794215530}
   - component: {fileID: 6146509749357775}
   - component: {fileID: 6570531177939497489}
+  - component: {fileID: 424161369}
   m_Layer: 0
   m_Name: Jackie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7543529228429425680
 Transform:
   m_ObjectHideFlags: 0
@@ -1845,7 +1846,7 @@ Animator:
   m_GameObject: {fileID: 7197930267762206378}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4b50e25683e84034d994cad5589f976a, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4bde7a8187b2aa14caafb6f314191f32, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1883,8 +1884,27 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &424161369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197930267762206378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3984dff00244b634e975cd83bd7c0d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  x: 0
+  y: 0
+  velocidad: 2
+  velocidadRotacion: 20
+  enemieType: 0
+  playerTramsform: {fileID: 0}
 --- !u!1 &7456167349678081397
 GameObject:
   m_ObjectHideFlags: 0

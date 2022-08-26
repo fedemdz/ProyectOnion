@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         // Estamos en reposo si se deja de presionar alguna de las teclas de movimiento.
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
-            if (!IsAnimation("IDLE")) player.SetTrigger("IDLE");
+            if (!IsAnimation("Idle")) player.SetTrigger("Idle");
         }
         //Limpiamos la dirección de movimiento en cada frame.
         playerDirection = Vector3.zero;

@@ -9,7 +9,7 @@ public class PlayerShoot : MonoBehaviour
     private GameObject munition;
 
     [SerializeField]
-    [Range(1f, 6f)]
+    [Range(0.01f, 6f)]
     private float cooldown = 2f;
 
     private bool canShoot = true;
@@ -24,7 +24,7 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             if (canShoot)
             {
