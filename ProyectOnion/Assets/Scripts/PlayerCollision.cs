@@ -66,7 +66,7 @@ public class PlayerCollision : MonoBehaviour
              El cálculo Vector3.up + Vector3.forward permite al
              aplicar fuerza en "diagonal"(hacia arriba y adelante)
             */
-            playerMove.MyRigidbody.AddForce((Vector3.up + Vector3.forward) * playerMove.MaxSpeed * 5f, ForceMode.VelocityChange);
+           playerMove.MyRigidbody.AddForce((Vector3.up + Vector3.forward) * playerMove.MaxSpeed * 5f, ForceMode.VelocityChange);
         }
 
         if (other.gameObject.CompareTag("Weapons"))

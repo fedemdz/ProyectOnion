@@ -8,6 +8,7 @@ TagManager:
   - GoldWall
   - Floor
   - Munition
+  - Weapons
   layers:
   - Default
   - TransparentFX
