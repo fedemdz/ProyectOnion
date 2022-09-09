@@ -366,6 +366,7 @@
 "Assets/Main menu with parallax FREE/Scripts/Settings.cs"
 "Assets/Main menu with parallax FREE/Scripts/SettingsController.cs"
 "Assets/Scripts/CannonManager.cs"
+"Assets/Scripts/Enemie2.cs"
 "Assets/Scripts/Enemies.cs"
 "Assets/Scripts/FollowCamera.cs"
 "Assets/Scripts/Managers/CameraController.cs"

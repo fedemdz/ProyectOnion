@@ -1811,7 +1811,7 @@ GameObject:
   - component: {fileID: 4490039389794215530}
   - component: {fileID: 6146509749357775}
   - component: {fileID: 6570531177939497489}
-  - component: {fileID: 424161369}
+  - component: {fileID: 4730650559758321375}
   m_Layer: 0
   m_Name: Jackie
   m_TagString: Untagged
@@ -1886,7 +1886,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &424161369
+--- !u!114 &4730650559758321375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1895,7 +1895,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7197930267762206378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3984dff00244b634e975cd83bd7c0d12, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d5d9bb23670a6b488fd8c86eaedb8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
